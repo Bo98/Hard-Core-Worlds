@@ -1,7 +1,5 @@
 package com.Cayviel.HardCoreWorlds;
 
-
-
 import java.io.File;
 import java.util.logging.Logger;
 
@@ -18,8 +16,6 @@ import org.bukkit.plugin.PluginManager;
 
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
-
-
 
 public class HardCoreWorlds extends JavaPlugin{
 	public static Logger log = Logger.getLogger("Minecraft");

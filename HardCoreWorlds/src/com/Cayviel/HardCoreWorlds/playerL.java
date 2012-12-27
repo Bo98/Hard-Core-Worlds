@@ -1,25 +1,24 @@
 package com.Cayviel.HardCoreWorlds;
 
-import net.minecraft.server.Packet103SetSlot;
+import net.minecraft.server.v1_4_6.Packet103SetSlot;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_4_6.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerPreLoginEvent.Result;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.WorldCreator;
-
 
 public class playerL implements Listener {
 	
@@ -83,7 +82,7 @@ public class playerL implements Listener {
 	}
 	
 	@EventHandler
-	public void onPlayerPreLogin (PlayerPreLoginEvent hi){
+	public void onPlayerPreLogin (AsyncPlayerPreLoginEvent hi){
 		String playerN = hi.getName();
 		if (! BanManager.isServerBanned(playerN)) return;
 		BanManager.updateServerBan(playerN);
@@ -141,15 +140,15 @@ public class playerL implements Listener {
             int nativeindex = i;
             if (i < 9) nativeindex = i + 36;
             ItemStack olditem =  c.getInventory().getItem(i);
-            net.minecraft.server.ItemStack item = null;
+            net.minecraft.server.v1_4_6.ItemStack item = null;
             if (olditem != null && olditem.getType() != Material.AIR) {
-                item = new net.minecraft.server.ItemStack(0, 0, 0);
+                item = new net.minecraft.server.v1_4_6.ItemStack(0, 0, 0);
                 item.id = olditem.getTypeId();
                 item.count = olditem.getAmount();
                 item.setData(olditem.getData().getData());
             }
             Packet103SetSlot pack = new Packet103SetSlot(0, nativeindex, item);
-            c.getHandle().netServerHandler.sendPacket(pack);
+            c.getHandle().playerConnection.sendPacket(pack);
         }
     }
 	
